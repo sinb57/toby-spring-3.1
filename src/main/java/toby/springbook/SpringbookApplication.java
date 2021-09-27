@@ -1,7 +1,6 @@
 package toby.springbook;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import toby.springbook.user.dao.NUserDao;
 import toby.springbook.user.dao.UserDao;
 import toby.springbook.user.domain.User;
 
