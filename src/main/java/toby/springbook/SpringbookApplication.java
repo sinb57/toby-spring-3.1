@@ -1,6 +1,7 @@
 package toby.springbook;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import toby.springbook.user.dao.DConnectionMaker;
 import toby.springbook.user.dao.UserDao;
 import toby.springbook.user.domain.User;
 
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 public class SpringbookApplication {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		UserDao dao = new UserDao();
+		UserDao dao = new UserDao(new DConnectionMaker());
 
 		User user = new User();
 		user.setId("whiteship");
