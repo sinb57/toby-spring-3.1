@@ -12,6 +12,24 @@ import java.sql.SQLException;
 public class UserDaoTest {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
+        DaoFactory factory = new DaoFactory();
+        UserDao dao1 = factory.userDao();
+        UserDao dao2 = factory.userDao();
+
+        System.out.println("factory dao1 = " + dao1);
+        System.out.println("factory dao2 = " + dao2);
+
+
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        UserDao dao3 = context.getBean("userDao", UserDao.class);
+        UserDao dao4 = context.getBean("userDao", UserDao.class);
+
+        System.out.println("context dao3 = " + dao3);
+        System.out.println("context dao4 = " + dao4);
+
+
+        /*
         ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
 
         UserDao dao = context.getBean("userDao", UserDao.class);
@@ -30,5 +48,6 @@ public class UserDaoTest {
         System.out.println(user2.getPassword());
 
         System.out.println(user2.getId() + " 조회 성공");
+        */
     }
 }
