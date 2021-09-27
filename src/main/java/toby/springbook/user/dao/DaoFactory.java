@@ -2,9 +2,11 @@ package toby.springbook.user.dao;
 
 public class DaoFactory {
 
+    public ConnectionMaker connectionMaker() {
+        return new DConnectionMaker();
+    }
+
     public UserDao userDao() {
-        ConnectionMaker connectionMaker = new DConnectionMaker();
-        UserDao dao = new UserDao(connectionMaker);
-        return dao;
+        return new UserDao(connectionMaker());
     }
 }
