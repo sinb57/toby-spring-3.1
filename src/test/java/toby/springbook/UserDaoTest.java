@@ -1,7 +1,9 @@
 package toby.springbook;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import toby.springbook.user.dao.DaoFactory;
 import toby.springbook.user.dao.UserDao;
 import toby.springbook.user.domain.User;
 
@@ -10,8 +12,8 @@ import java.sql.SQLException;
 public class UserDaoTest {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        //ApplicationContext context = new AnnotationConfigApplicationContext(CountingDaoFactory.class);
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        //ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 
         UserDao dao = context.getBean("userDao", UserDao.class);
