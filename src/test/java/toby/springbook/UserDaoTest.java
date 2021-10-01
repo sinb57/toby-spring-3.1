@@ -18,17 +18,18 @@ public class UserDaoTest {
 
         UserDao dao = context.getBean("userDao", UserDao.class);
 
+        dao.deleteAll();
+        assertThat(dao.getCount()).isEqualTo(0);
+
         User user = new User();
         user.setId("gyumee");
         user.setName("박성철");
         user.setPassword("springno1");
 
         dao.add(user);
-
-        System.out.println(user.getId() + " 등록 성공");
+        assertThat(dao.getCount()).isEqualTo(1);
 
         User user2 = dao.get(user.getId());
-
         assertThat(user2.getName()).isEqualTo(user.getName());
         assertThat(user2.getPassword()).isEqualTo(user.getPassword());
 
