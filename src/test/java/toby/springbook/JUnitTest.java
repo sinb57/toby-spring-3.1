@@ -1,34 +1,35 @@
 package toby.springbook;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JUnitTest {
 
-    static JUnitTest testObject;
+    static Set<JUnitTest> testObjects = new HashSet<JUnitTest>();
 
     @Test
     public void test1() {
-        Assertions.assertThat(this).isNotEqualTo(testObject);
-        System.out.println("testObject = " + testObject);
+        assertThat(this).isNotIn(testObjects);
         System.out.println("this = " + this);
-        testObject = this;
+        testObjects.add(this);
     }
 
     @Test
     public void test2() {
-        Assertions.assertThat(this).isNotEqualTo(testObject);
-        System.out.println("testObject = " + testObject);
+        assertThat(this).isNotIn(testObjects);
         System.out.println("this = " + this);
-        testObject = this;
+        testObjects.add(this);
     }
 
     @Test
     public void test3() {
-        Assertions.assertThat(this).isNotEqualTo(testObject);
-        System.out.println("testObject = " + testObject);
+        assertThat(this).isNotIn(testObjects);
         System.out.println("this = " + this);
-        testObject = this;
+        testObjects.add(this);
     }
 
 
