@@ -8,30 +8,26 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import toby.springbook.user.dao.UserDao;
 import toby.springbook.user.domain.User;
 
-import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations="/applicationContext.xml")
-@DirtiesContext
 public class UserDaoTest {
+
     @Autowired
+    private ApplicationContext context;
     private UserDao dao;
 
     @BeforeEach
     public void setUp() {
-        DataSource dataSource = new SingleConnectionDataSource(
-                "jdbc:mysql://localhost/testdb", "root", "qwe123!@#", true);
-        dao.setDataSource(dataSource);
+        dao = context.getBean("userDao", UserDao.class);
     }
 
     @Test
