@@ -1,9 +1,11 @@
 package toby.springbook;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 import toby.springbook.user.dao.UserDao;
 import toby.springbook.user.domain.User;
 
@@ -36,6 +38,22 @@ public class UserDaoTest {
         assertThat(userget2.getName()).isEqualTo(user2.getName());
         assertThat(userget2.getPassword()).isEqualTo(user2.getPassword());
     }
+
+
+    @Test
+    public void getUserFailure() throws SQLException {
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        UserDao dao = context.getBean("userDao", UserDao.class);
+        dao.deleteAll();
+        assertThat(dao.getCount()).isEqualTo(0);
+
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            dao.get("unknown_id");
+        });
+
+    }
+
 
 
     @DisplayName("getCount 메소드 테스트")
