@@ -46,13 +46,16 @@ public class UserDaoTest {
         assertThat(dao.getCount()).isEqualTo(0);
 
         for (int i=1; i<6; i++) {
-            String id = "id" + i;
-            String name = "name" + i;
-            String password = "password" + i;
-
-            User user = new User(id, name, password);
+            User user = createUser(i);
             dao.add(user);
             assertThat(dao.getCount()).isEqualTo(i);
         }
+    }
+
+    private User createUser(int i) {
+        String id = "id" + i;
+        String name = "name" + i;
+        String password = "password" + i;
+        return new User(id, name, password);
     }
 }
