@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 public class UserDaoTest {
 
     @Test
-    public void addAndGet() throws ClassNotFoundException, SQLException {
+    public void addAndGet() throws SQLException {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
         UserDao dao = context.getBean("userDao", UserDao.class);
@@ -35,12 +35,12 @@ public class UserDaoTest {
         User userget2 = dao.get(user2.getId());
         assertThat(userget2.getName()).isEqualTo(user2.getName());
         assertThat(userget2.getPassword()).isEqualTo(user2.getPassword());
-
     }
+
 
     @DisplayName("getCount 메소드 테스트")
     @Test
-    public void count() throws ClassNotFoundException, SQLException {
+    public void count() throws SQLException {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
         UserDao dao = context.getBean("userDao", UserDao.class);
