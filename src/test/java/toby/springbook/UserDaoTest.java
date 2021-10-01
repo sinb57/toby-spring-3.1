@@ -1,6 +1,7 @@
 package toby.springbook;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -14,19 +15,23 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.*;
 
 public class UserDaoTest {
+    private UserDao dao;
+
+    @BeforeEach
+    public void setUp() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        dao = context.getBean("userDao", UserDao.class);
+    }
 
     @Test
     public void addAndGet() throws SQLException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        UserDao dao = context.getBean("userDao", UserDao.class);
-        User user1 = createUser(1);
-        User user2 = createUser(2);
 
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
+        User user1 = createUser(1);
         dao.add(user1);
+        User user2 = createUser(2);
         dao.add(user2);
         assertThat(dao.getCount()).isEqualTo(2);
 
@@ -42,9 +47,7 @@ public class UserDaoTest {
 
     @Test
     public void getUserFailure() throws SQLException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-        UserDao dao = context.getBean("userDao", UserDao.class);
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
@@ -59,9 +62,7 @@ public class UserDaoTest {
     @DisplayName("getCount 메소드 테스트")
     @Test
     public void count() throws SQLException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-        UserDao dao = context.getBean("userDao", UserDao.class);
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
