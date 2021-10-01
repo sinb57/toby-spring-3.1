@@ -17,6 +17,7 @@ dependencies {
 	implementation 'org.springframework:spring-jdbc:5.3.10'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'mysql:mysql-connector-java:8.0.26'
+	testImplementation 'junit:junit:4.12'
 }
 
 test {
