@@ -11,18 +11,9 @@ public class UserDao {
     private DataSource dataSource;
 
     public void add(User user) throws SQLException {
-        Connection c = dataSource.getConnection();
+        StatementStrategy st = new AddStatement(user);
+        jdbcContextWithStatementStrategy(st);
 
-        PreparedStatement ps = c.prepareStatement(
-                "insert into users(id, name, password) values(?,?,?)");
-        ps.setString(1, user.getId());
-        ps.setString(2, user.getName());
-        ps.setString(3, user.getPassword());
-
-        ps.executeUpdate();
-
-        ps.close();
-        c.close();
     }
 
     public User get(String id) throws SQLException {
