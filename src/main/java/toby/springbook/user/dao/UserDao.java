@@ -3,14 +3,18 @@ package toby.springbook.user.dao;
 import org.springframework.dao.EmptyResultDataAccessException;
 import toby.springbook.user.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.*;
 
 public class UserDao {
 
+    private DataSource dataSource; // 아직 JdbcContext를 적용하지 않은 메소드를 위해 남겨둔다.
     private JdbcContext jdbcContext;
 
-    public void setJdbcContext(JdbcContext jdbcContext) {
-        this.jdbcContext = jdbcContext;
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcContext = new JdbcContext();
+        jdbcContext.setDataSource(dataSource);
+        this.dataSource = dataSource;
     }
 
     public void add(final User user) throws SQLException {
