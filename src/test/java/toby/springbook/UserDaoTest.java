@@ -33,7 +33,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void addAndGet() throws SQLException {
+    public void addAndGet() {
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
@@ -70,7 +70,7 @@ public class UserDaoTest {
         }
 
     }
-
+    
     private void checkSameUser(List<User> originList, List<User> dbList) {
         for (int i=0; i<originList.size(); i++) {
             User user1 = originList.get(i);
@@ -83,7 +83,7 @@ public class UserDaoTest {
 
 
     @Test
-    public void getUserFailure() throws SQLException {
+    public void getUserFailure() {
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
@@ -97,7 +97,7 @@ public class UserDaoTest {
 
     @DisplayName("getCount 메소드 테스트")
     @Test
-    public void count() throws SQLException {
+    public void count() {
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
