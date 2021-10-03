@@ -1,6 +1,7 @@
 package toby.springbook.user.dao;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import toby.springbook.user.domain.User;
 
 import javax.sql.DataSource;
@@ -8,18 +9,16 @@ import java.sql.*;
 
 public class UserDao {
 
+    private JdbcTemplate jdbcTemplate;
     private DataSource dataSource; // 아직 JdbcContext를 적용하지 않은 메소드를 위해 남겨둔다.
-    private JdbcContext jdbcContext;
 
     public void setDataSource(DataSource dataSource) {
-        this.jdbcContext = new JdbcContext();
-        jdbcContext.setDataSource(dataSource);
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.dataSource = dataSource;
     }
 
     public void add(final User user) throws SQLException {
-        String[] args = {user.getId(), user.getName(), user.getPassword()};
-        jdbcContext.executeSql("insert into users(id, name, password) values(?,?,?)", args);
+        jdbcTemplate.update("insert into users values (?,?,?)", user.getId(), user.getName(), user.getPassword());
 
     }
 
@@ -52,7 +51,7 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-        jdbcContext.executeSql("delete from users");
+        jdbcTemplate.update("delete from users");
     }
 
 
