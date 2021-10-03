@@ -33,7 +33,6 @@ public class UserDaoTest {
 
     @Test
     public void addAndGet() throws SQLException {
-
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
@@ -52,10 +51,8 @@ public class UserDaoTest {
         assertThat(userget2.getPassword()).isEqualTo(user2.getPassword());
     }
 
-
     @Test
     public void getUserFailure() throws SQLException {
-
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
@@ -70,7 +67,6 @@ public class UserDaoTest {
     @DisplayName("getCount 메소드 테스트")
     @Test
     public void count() throws SQLException {
-
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
