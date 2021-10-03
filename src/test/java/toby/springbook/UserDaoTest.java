@@ -59,7 +59,7 @@ public class UserDaoTest {
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
-        Assertions.assertThrows(IncorrectResultSizeDataAccessException.class, () -> {
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
             dao.get("unknown_id");
         });
 
