@@ -8,13 +8,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import toby.springbook.user.dao.UserDao;
 import toby.springbook.user.domain.User;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -50,6 +51,36 @@ public class UserDaoTest {
         assertThat(userget2.getName()).isEqualTo(user2.getName());
         assertThat(userget2.getPassword()).isEqualTo(user2.getPassword());
     }
+
+    @Test
+    public void getAll() {
+        dao.deleteAll();
+        assertThat(dao.getCount()).isEqualTo(0);
+
+        List<User> originList = new ArrayList<>();
+        for (int i=1; i<6; i++) {
+            User user = createUser(i);
+            originList.add(user);
+            dao.add(user);
+
+            List<User> dbList = dao.getAll();
+            assertThat(dbList.size()).isEqualTo(originList.size());
+
+            checkSameUser(originList, dbList);
+        }
+
+    }
+
+    private void checkSameUser(List<User> originList, List<User> dbList) {
+        for (int i=0; i<originList.size(); i++) {
+            User user1 = originList.get(i);
+            User user2 = dbList.get(i);
+            assertThat(user1.getId()).isEqualTo(user2.getId());
+            assertThat(user1.getName()).isEqualTo(user2.getName());
+            assertThat(user1.getPassword()).isEqualTo(user2.getPassword());
+        }
+    }
+
 
     @Test
     public void getUserFailure() throws SQLException {

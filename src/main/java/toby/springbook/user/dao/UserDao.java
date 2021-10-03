@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import toby.springbook.user.domain.User;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 public class UserDao {
 
@@ -24,6 +25,15 @@ public class UserDao {
                         rs.getString("name"),
                         rs.getString("password")
                 ), id);
+    }
+
+    public List<User> getAll() {
+        return jdbcTemplate.query("select * from users",
+                (rs, nowNum) -> new User(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("password")
+                ));
     }
 
     public void deleteAll() {
