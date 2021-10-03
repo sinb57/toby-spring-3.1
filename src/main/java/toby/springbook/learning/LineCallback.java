@@ -1,10 +1,9 @@
 package toby.springbook.learning;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
-public interface LineCallback {
-    Integer doSomethingWithReader(String line, Integer value) throws IOException;
+public interface LineCallback<T> {
+    T doSomethingWithReader(String line, T value);
 }
 
 
