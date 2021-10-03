@@ -3,16 +3,18 @@ package toby.springbook.user.dao;
 import org.springframework.dao.EmptyResultDataAccessException;
 import toby.springbook.user.domain.User;
 
-import javax.sql.DataSource;
 import java.sql.*;
 
 public class UserDao {
 
-    private DataSource dataSource;
+    private JdbcContext jdbcContext;
+
+    public void setJdbcContext(JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
+    }
 
     public void add(final User user) throws SQLException {
-
-        jdbcContextWithStatementStrategy(
+        jdbcContext.workWithStatementStrategy(
                 new StatementStrategy() {
                     @Override
                     public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
@@ -59,7 +61,7 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-        jdbcContextWithStatementStrategy(
+        jdbcContext.workWithStatementStrategy(
                 new StatementStrategy() {
                     @Override
                     public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
@@ -70,36 +72,6 @@ public class UserDao {
         );
     }
 
-    public void jdbcContextWithStatementStrategy(StatementStrategy stmt) throws SQLException {
-        Connection c = null;
-        PreparedStatement ps = null;
-
-        try {
-            c = dataSource.getConnection();
-
-            ps = stmt.makePreparedStatement(c);
-
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-
-                }
-            }
-
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-
-                }
-            }
-        }
-    }
 
     public int getCount() throws SQLException {
         Connection c = null;
@@ -139,10 +111,6 @@ public class UserDao {
                 }
             }
         }
-    }
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
     }
 
 }
