@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-public class CalcSumTest {
+public class CalculatorTest {
 
     Calculator calculator;
     String numFilepath;
