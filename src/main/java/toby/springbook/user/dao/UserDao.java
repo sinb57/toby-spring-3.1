@@ -10,7 +10,7 @@ public class UserDao {
 
     private DataSource dataSource;
 
-    public void add(User user) throws SQLException {
+    public void add(final User user) throws SQLException {
         class AddStatement implements StatementStrategy {
             private User user;
 
@@ -19,7 +19,7 @@ public class UserDao {
             }
 
             @Override
-            public PreparedStatement makePremparedStatement(Connection c) throws SQLException {
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
                 PreparedStatement ps = c.prepareStatement(
                         "insert into users(id, name, password) values(?,?,?)");
 
@@ -76,7 +76,7 @@ public class UserDao {
         try {
             c = dataSource.getConnection();
 
-            ps = stmt.makePremparedStatement(c);
+            ps = stmt.makePreparedStatement(c);
 
             ps.executeUpdate();
         } catch (SQLException e) {
