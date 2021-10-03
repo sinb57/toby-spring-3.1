@@ -23,16 +23,11 @@ public class UserDao {
 
     public User get(String id) {
         return jdbcTemplate.queryForObject("select  * from users where id = ?",
-                new RowMapper<User>() {
-                    @Override
-                    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        User user = new User();
-                        user.setId(rs.getString("id"));
-                        user.setName(rs.getString("name"));
-                        user.setPassword(rs.getString("password"));
-                        return user;
-                    }
-                }, id);
+                (rs, nowNum) -> new User(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("password")
+                ), id);
     }
 
     public void deleteAll() {
