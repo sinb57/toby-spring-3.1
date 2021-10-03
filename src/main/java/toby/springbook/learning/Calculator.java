@@ -13,7 +13,7 @@ public class Calculator {
                 return value + Integer.valueOf(line);
             }
         };
-        return fileReadTemplate(filepath, sumCallback, 0);
+        return lineReadTemplate(filepath, sumCallback, 0);
     }
 
     public Integer calcMultiply(String filepath) throws IOException {
@@ -24,10 +24,10 @@ public class Calculator {
             }
         };
 
-        return fileReadTemplate(filepath, multiplyCallback, 1);
+        return lineReadTemplate(filepath, multiplyCallback, 1);
     }
 
-    public Integer fileReadTemplate(String filepath, LineCallback callback, int initVal) throws IOException {
+    public Integer lineReadTemplate(String filepath, LineCallback callback, int initVal) throws IOException {
         BufferedReader br = null;
 
         try {
