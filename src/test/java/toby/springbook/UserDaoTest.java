@@ -57,6 +57,9 @@ public class UserDaoTest {
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
+        List<User> userListZero = dao.getAll();
+        assertThat(userListZero.size()).isEqualTo(0);
+
         List<User> originList = new ArrayList<>();
         for (int i=1; i<6; i++) {
             User user = createUser(i);
