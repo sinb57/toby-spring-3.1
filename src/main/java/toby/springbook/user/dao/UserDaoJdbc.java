@@ -11,12 +11,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoJdbc implements UserDao {
+    private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-
-    private JdbcTemplate jdbcTemplate;
 
     private RowMapper<User> userMapper = new RowMapper<User>() {
         @Override
