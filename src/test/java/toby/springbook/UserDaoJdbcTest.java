@@ -13,7 +13,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import toby.springbook.user.dao.UserDaoJdbc;
 import toby.springbook.user.domain.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -24,18 +23,21 @@ public class UserDaoJdbcTest {
 
     @Autowired
     private UserDaoJdbc dao;
+    private User user1, user2, user3;
 
     @BeforeEach
     public void setUp() {
+        this.user1 = new User("gyumee", "박성철", "springno1");
+        this.user2 = new User("leegw700", "이길원", "springno2");
+        this.user3 = new User("bumjin", "박범진", "springno3");
+
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
     }
 
     @Test
     public void addAndGet() {
-        User user1 = createUser(1);
         dao.add(user1);
-        User user2 = createUser(2);
         dao.add(user2);
         assertThat(dao.getCount()).isEqualTo(2);
 
@@ -50,30 +52,18 @@ public class UserDaoJdbcTest {
 
     @Test
     public void getAll() {
-        List<User> userListZero = dao.getAll();
-        assertThat(userListZero.size()).isEqualTo(0);
+        User[] originList = {user1, user2, user3};
+        List<User> dbList = null;
 
-        List<User> originList = new ArrayList<>();
-        for (int i=1; i<6; i++) {
-            User user = createUser(i);
-            originList.add(user);
-            dao.add(user);
+        for (int i=0; i<3; i++) {
+            User originUser = originList[i];
+            User dbUser = null;
 
-            List<User> dbList = dao.getAll();
-            assertThat(dbList.size()).isEqualTo(originList.size());
+            dao.add(originUser);
+            dbList = dao.getAll();
+            dbUser = dbList.get(i);
 
-            checkSameUser(originList, dbList);
-        }
-
-    }
-    
-    private void checkSameUser(List<User> originList, List<User> dbList) {
-        for (int i=0; i<originList.size(); i++) {
-            User user1 = originList.get(i);
-            User user2 = dbList.get(i);
-            assertThat(user1.getId()).isEqualTo(user2.getId());
-            assertThat(user1.getName()).isEqualTo(user2.getName());
-            assertThat(user1.getPassword()).isEqualTo(user2.getPassword());
+            assertThat(dbList.size()).isEqualTo(i+1);
         }
     }
 
@@ -86,32 +76,24 @@ public class UserDaoJdbcTest {
 
     }
 
-
-
     @DisplayName("getCount 메소드 테스트")
     @Test
     public void count() {
-        for (int i=1; i<6; i++) {
-            User user = createUser(i);
+        User[] userList = {user1, user2, user3};
+
+        for (int i=0; i<3; i++) {
+            User user = userList[i];
             dao.add(user);
-            assertThat(dao.getCount()).isEqualTo(i);
+            assertThat(dao.getCount()).isEqualTo(i+1);
         }
     }
 
     @Test
     public void duplicatedKey() {
-        User user = createUser(1);
         Assertions.assertThrows(DuplicateKeyException.class, () -> {
-            dao.add(user);
-            dao.add(user);
+            dao.add(user1);
+            dao.add(user1);
         });
-    }
-
-    private User createUser(int i) {
-        String id = "id" + i;
-        String name = "name" + i;
-        String password = "password" + i;
-        return new User(id, name, password);
     }
 
 }
