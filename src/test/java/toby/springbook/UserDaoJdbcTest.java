@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -96,6 +97,15 @@ public class UserDaoJdbcTest {
             dao.add(user);
             assertThat(dao.getCount()).isEqualTo(i);
         }
+    }
+
+    @Test
+    public void duplicatedKey() {
+        User user = createUser(1);
+        Assertions.assertThrows(DuplicateKeyException.class, () -> {
+            dao.add(user);
+            dao.add(user);
+        });
     }
 
     private User createUser(int i) {
