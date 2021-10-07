@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import toby.springbook.user.dao.UserDaoJdbc;
+import toby.springbook.user.domain.Level;
 import toby.springbook.user.domain.User;
 
 import java.util.List;
@@ -27,9 +28,9 @@ public class UserDaoJdbcTest {
 
     @BeforeEach
     public void setUp() {
-        this.user1 = new User("gyumee", "박성철", "springno1");
-        this.user2 = new User("leegw700", "이길원", "springno2");
-        this.user3 = new User("bumjin", "박범진", "springno3");
+        this.user1 = new User("gyumee", "박성철", "springno1", Level.BASIC, 1, 0);
+        this.user2 = new User("leegw700", "이길원", "springno2", Level.SILVER, 55, 10);
+        this.user3 = new User("bumjin", "박범진", "springno3", Level.GOLD, 100, 40);
 
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
