@@ -6,14 +6,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import toby.springbook.user.dao.UserDao;
+import toby.springbook.user.dao.UserDaoJdbc;
 import toby.springbook.user.domain.User;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +20,10 @@ import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations="/applicationContext.xml")
-public class UserDaoTest {
+public class UserDaoJdbcTest {
 
     @Autowired
-    private ApplicationContext context;
-    private UserDao dao;
+    private UserDaoJdbc dao;
 
     @BeforeEach
     public void setUp() {
@@ -117,4 +115,5 @@ public class UserDaoTest {
         String password = "password" + i;
         return new User(id, name, password);
     }
+
 }
