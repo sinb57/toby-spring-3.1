@@ -27,14 +27,12 @@ public class UserDaoJdbcTest {
 
     @BeforeEach
     public void setUp() {
-        dao = context.getBean("userDao", UserDao.class);
+        dao.deleteAll();
+        assertThat(dao.getCount()).isEqualTo(0);
     }
 
     @Test
     public void addAndGet() {
-        dao.deleteAll();
-        assertThat(dao.getCount()).isEqualTo(0);
-
         User user1 = createUser(1);
         dao.add(user1);
         User user2 = createUser(2);
@@ -52,9 +50,6 @@ public class UserDaoJdbcTest {
 
     @Test
     public void getAll() {
-        dao.deleteAll();
-        assertThat(dao.getCount()).isEqualTo(0);
-
         List<User> userListZero = dao.getAll();
         assertThat(userListZero.size()).isEqualTo(0);
 
@@ -85,9 +80,6 @@ public class UserDaoJdbcTest {
 
     @Test
     public void getUserFailure() {
-        dao.deleteAll();
-        assertThat(dao.getCount()).isEqualTo(0);
-
         Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
             dao.get("unknown_id");
         });
@@ -99,9 +91,6 @@ public class UserDaoJdbcTest {
     @DisplayName("getCount 메소드 테스트")
     @Test
     public void count() {
-        dao.deleteAll();
-        assertThat(dao.getCount()).isEqualTo(0);
-
         for (int i=1; i<6; i++) {
             User user = createUser(i);
             dao.add(user);
