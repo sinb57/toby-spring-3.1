@@ -32,8 +32,8 @@ public class UserDaoJdbc implements UserDao {
         }
     };
 
-    public void add(final User user) {
-        jdbcTemplate.update("insert into users values (?,?,?,?,?,?)",
+    public int add(final User user) {
+        return jdbcTemplate.update("insert into users values (?,?,?,?,?,?)",
                 user.getId(), user.getName(), user.getPassword(),
                 user.getLevel().intValue(), user.getLogin(), user.getRecommend());
     }
@@ -46,16 +46,16 @@ public class UserDaoJdbc implements UserDao {
         return jdbcTemplate.query("select * from users", userMapper);
     }
 
-    public void deleteAll() {
-        jdbcTemplate.update("delete from users");
+    public int deleteAll() {
+        return jdbcTemplate.update("delete from users");
     }
 
     public int getCount() {
         return jdbcTemplate.queryForObject("select count(*) from users", Integer.class);
     }
 
-    public void update(User user) {
-        jdbcTemplate.update("update users " +
+    public int update(User user) {
+        return jdbcTemplate.update("update users " +
                 "set name = ?, password = ?, level = ?, login = ?, recommend = ? where id = ?",
                 user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLogin(), user.getRecommend(), user.getId());
     }

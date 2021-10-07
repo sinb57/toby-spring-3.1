@@ -97,6 +97,7 @@ public class UserDaoJdbcTest {
 
     @Test
     public void update() {
+        int affectedRows = 0;
         dao.add(user1);
 
         user1.setName("오민규");
@@ -104,7 +105,9 @@ public class UserDaoJdbcTest {
         user1.setLevel(Level.GOLD);
         user1.setLogin(100);
         user1.setRecommend(999);
-        dao.update(user1);
+
+        affectedRows = dao.update(user1);
+        assertThat(affectedRows).isEqualTo(1);
 
         User user1update = dao.get(user1.getId());
         checkSameUser(user1, user1update);
