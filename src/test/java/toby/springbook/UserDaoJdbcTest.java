@@ -95,6 +95,20 @@ public class UserDaoJdbcTest {
         });
     }
 
+    @Test
+    public void update() {
+        dao.add(user1);
+
+        user1.setName("오민규");
+        user1.setPassword("springno6");
+        user1.setLevel(Level.GOLD);
+        user1.setLogin(100);
+        user1.setRecommend(999);
+        dao.update(user1);
+
+        User user1update = dao.get(user1.getId());
+        checkSameUser(user1, user1update);
+    }
 
     private void checkSameUser(User originUser, User dbUser) {
         assertThat(dbUser.getId()).isEqualTo(originUser.getId());
