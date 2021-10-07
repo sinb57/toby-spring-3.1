@@ -43,12 +43,10 @@ public class UserDaoJdbcTest {
         assertThat(dao.getCount()).isEqualTo(2);
 
         User userget1 = dao.get(user1.getId());
-        assertThat(userget1.getName()).isEqualTo(user1.getName());
-        assertThat(userget1.getPassword()).isEqualTo(user1.getPassword());
+        checkSameUser(user1, userget1);
 
         User userget2 = dao.get(user2.getId());
-        assertThat(userget2.getName()).isEqualTo(user2.getName());
-        assertThat(userget2.getPassword()).isEqualTo(user2.getPassword());
+        checkSameUser(user2, userget2);
     }
 
     @Test
@@ -97,4 +95,13 @@ public class UserDaoJdbcTest {
         });
     }
 
+
+    private void checkSameUser(User originUser, User dbUser) {
+        assertThat(dbUser.getId()).isEqualTo(originUser.getId());
+        assertThat(dbUser.getName()).isEqualTo(originUser.getName());
+        assertThat(dbUser.getPassword()).isEqualTo(originUser.getPassword());
+        assertThat(dbUser.getLevel()).isEqualTo(originUser.getLevel());
+        assertThat(dbUser.getLogin()).isEqualTo(originUser.getLogin());
+        assertThat(dbUser.getRecommend()).isEqualTo(originUser.getRecommend());
+    }
 }
