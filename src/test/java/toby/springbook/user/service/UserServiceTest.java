@@ -1,4 +1,4 @@
-package toby.springbook;
+package toby.springbook.user.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

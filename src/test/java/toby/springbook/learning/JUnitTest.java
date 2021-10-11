@@ -1,4 +1,4 @@
-package toby.springbook;
+package toby.springbook.learning;
 
 import org.junit.jupiter.api.Test;
 

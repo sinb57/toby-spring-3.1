@@ -1,4 +1,4 @@
-package toby.springbook;
+package toby.springbook.user.dao;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations="/applicationContext.xml")
-public class UserDaoJdbcTest {
+public class UserDaoTest {
 
     @Autowired
     private UserDaoJdbc dao;
