@@ -15,8 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static toby.springbook.user.services.UserService.MIN_LOGCOUNT_FOR_SILVER;
-import static toby.springbook.user.services.UserService.MIN_RECOMMEND_FOR_GOLD;
+import static toby.springbook.user.services.UsualUserLevelUpgradePolicy.MIN_LOGCOUNT_FOR_SILVER;
+import static toby.springbook.user.services.UsualUserLevelUpgradePolicy.MIN_RECOMMEND_FOR_GOLD;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations="/applicationContext.xml")
